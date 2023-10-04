@@ -2,6 +2,21 @@ import './globals.css'
 import Nav from './components/Nav'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
+import Hydrate from './components/Hydrate'
+import { Roboto, Lobster_Two } from 'next/font/google'
+import { ReactQueryProvider } from './components/ReactQueryProvider'
+
+const roboto = Roboto({
+  weight: ['400', '500', '700'],
+  subsets: ['latin'],
+  variable: '--font-robot'
+})
+
+const lobster = Lobster_Two({
+  weight: '700',
+  subsets: ['latin'],
+  variable: '--font-lobster'
+})
 
 export const metadata = {
   title: 'Create Next App',
@@ -17,11 +32,15 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions)
   console.log(session)
   return (
-    <html lang="en">
-      <body className='mx-64 scrollbar-hide'>
-        <Nav user={session?.user} expires={session?.expires as string}/>
-        {children}
-      </body>
-    </html>
+    <ReactQueryProvider>
+      <html lang="en">
+        <body className={`mx-4 lg:mx-48 ${roboto.className} scrollbar-hide`}>
+          <Hydrate>
+            <Nav user={session?.user} expires={session?.expires as string} />
+            {children}
+          </Hydrate>
+        </body>
+      </html>
+    </ReactQueryProvider>
   )
 }
