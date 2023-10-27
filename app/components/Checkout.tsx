@@ -6,7 +6,7 @@ import { Elements } from "@stripe/react-stripe-js"
 import { useCartStore } from "@/store"
 import axios from "axios"
 import { useRouter } from "next/navigation"
-import { useMutation, useQueryClient } from "react-query"
+import CheckoutForm from "./CheckoutForm"
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
@@ -16,7 +16,7 @@ const Checkout = () => {
   const cartStore = useCartStore()
   const router = useRouter();
   const [clientSecret, setClientSecret] = useState("")
-  
+
   useEffect(() => {
     const url = '/api/create-payment-intent'
     const config = {
@@ -59,7 +59,7 @@ const Checkout = () => {
       {clientSecret && (
         <div>
           <Elements options={options} stripe={stripePromise}>
-            <h1>Form</h1>
+            <CheckoutForm clientSecret={clientSecret} />
           </Elements>
         </div>
       )}

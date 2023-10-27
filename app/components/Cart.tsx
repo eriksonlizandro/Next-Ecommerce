@@ -91,17 +91,6 @@ export default function Cart() {
             ))}
           </>
         )}
-        {/* Checkout and total */}
-        <motion.div layout className="absolute bottom-10 w-4/5">
-          {cartStore.cart.length > 0 && (
-            <>
-              <p>Total: {formatPrice(totalPrice)}</p>
-              <button onClick={()=> cartStore.setCheckout('checkout')} className="py-2 mt-4 bg-teal-700 w-full rounded-md text-white ">
-                Checkout
-              </button>
-            </>
-          )}
-        </motion.div>
         {/* Cart Form */}
         {cartStore.onCheckout === "checkout" && <Checkout/>}
         <AnimatePresence>
